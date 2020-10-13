@@ -1,0 +1,25 @@
+{
+  "name": "postal-code",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "axios-jsonp": "^1.0.4",
+    "bootstrap": "^4.5.2",
+    "bootstrap-vue": "^2.17.3",
+    "core-js": "^3.6.5",
+    "google-maps-api-loader": "^1.1.1",
+    "node-sass": "^4.14.1",
+    "nuxt": "^2.14.6",
+    "sass-loader": "^10.0.3",
+    "vee-validate": "^3.4.1"
+  },
+  "devDependencies": {}
+}
