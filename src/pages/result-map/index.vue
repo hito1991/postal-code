@@ -1,6 +1,6 @@
 <template>
 <div class="contents">
-  <section class="section section-site-top pt-5 pb-5">
+  <section class="section section-site-top pt-5">
     <div class="container">
       <h1 class="site-title text-center font-weight-bold">Google Map</h1>
     </div>
@@ -11,8 +11,16 @@
       <div class="map-holder">
         <div class="map" ref="map"></div>
       </div>
+      <div class="btn-holder mt-5">
+        <a href="/" class="btn btn-lg btn-block btn-primary">戻る</a>
+
+        <button type="submit" class="btn mt-5 btn-lg btn-block btn-primary" @click="gnavi()">近くのレストランを見る</button>
+      </div>
     </div>
   </section>
+  <Modal ref="modal">
+    <p class="text-danger mb-0">{{modalText}}</p>
+  </Modal>
 </div>
 </template>
 
@@ -36,7 +44,8 @@ export default {
           lng: 0
         },
         zoom: 17
-      }
+      },
+      modalText:"",
     }
   },
   watch:{
@@ -47,30 +56,29 @@ export default {
       apiKey: this.googleMapKey
     });
     var geocoder = new google.maps.Geocoder();
-    console.log(geocoder)
     geocoder.geocode({address:this.query.address},this.geoResultCallback)
 
   },
   methods:{
     geoResultCallback(result, status){
-      console.log(1234567890)
       if (status != google.maps.GeocoderStatus.OK) {
-        alert(status);
+        this.modalText="マップを表示できませんでした。"
+        this.$bvModal.show("modal")
         return;
       }
       this.latlng = result[0].geometry.location;
       var latlngArr = result[0].geometry.location.toUrlValue().split(",");
       this.mapConfig.center.lat = Number(latlngArr[0]);
       this.mapConfig.center.lng = Number(latlngArr[1]);
-      
-      
-
       this.initializeMap();
     },
     initializeMap() {
       console.log(this.mapConfig)
       this.googleMap = new this.google.maps.Map(this.$refs.map, this.mapConfig);
       new google.maps.Marker({position:this.latlng, map:this.googleMap});
+    },
+    async gnavi(){
+      this.$router.push('/result-gurunavi/?lat='+this.mapConfig.center.lat+'&lng='+this.mapConfig.center.lng);
     }
   }
 }
@@ -80,7 +88,7 @@ export default {
 .map-holder{
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 400px;
   .map{
     width: 100%; height: 100%;
     position: absolute;

@@ -2,7 +2,7 @@
 <div class="contents">
   <section class="section section-site-top">
     <div class="container">
-      <h1 class="site-title font-weight-bold">郵便番号検索API</h1>
+      <h1 class="site-title font-weight-bold">住所検索APP</h1>
     </div>
   </section>
 
@@ -58,7 +58,7 @@
               </ValidationProvider>
             </div>
             <div class="btn-holder mt-5">
-              <button type="submit" class="btn btn-lg btn-block btn-primary" @click="check(validate)">Google Map を見る</button>
+              <button type="submit" class="btn btn-lg btn-block btn-primary" @click="gmap(validate)">Mapを見る</button>
             </div>
         </validation-observer>
       </div>
@@ -105,10 +105,10 @@ export default {
   },
   watch:{
     "postalCodeView.postalCode1"(v){
-      this.postalCodeView.postalCode1=v.replace(/\D/g, '')
+      this.postalCodeView.postalCode1=v.replace(/\D/g, "")
     },
     "postalCodeView.postalCode2"(v){
-      this.postalCodeView.postalCode2=v.replace(/\D/g, '')
+      this.postalCodeView.postalCode2=v.replace(/\D/g, "")
     },
     postalCodeView:{
       handler(v) {
@@ -147,14 +147,14 @@ export default {
         }
       }
     },
-    async check(validate){
+    async gmap(validate){
       const isValid= await validate();
       if(isValid){
         var address = this.post.prefectures + this.post.address;
         if(this.post.building){
-          address += ' ' + this.post.building
+          address += " " + this.post.building
         }
-        this.$router.push('/result-map?address=' + address)
+        this.$router.push("/result-map/?address=" + address)
       }
     }
   }
