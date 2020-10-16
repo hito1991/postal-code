@@ -37,6 +37,9 @@ export default {
     'bootstrap-vue/nuxt',
   ],
   build: {
+    babel: {
+      compact: true
+    }
   },
   dotenv: {
     path: process.cwd()
