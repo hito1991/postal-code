@@ -25,6 +25,10 @@
       </div>
     </div>
   </section>
+
+  <Modal ref="modal">
+    <p class="text-danger mb-0">{{modalText}}</p>
+  </Modal>
 </div>
 </template>
 
@@ -36,7 +40,8 @@ export default {
   data () {
     return {
       query: "",
-      items: []
+      items: [],
+      modalText:"",
     }
   },
   async created(){
@@ -47,7 +52,9 @@ export default {
     url += "&longitude="+this.query.lng;
     url += "&hit_per_page=10";
     var response = await this.$axios.$get(url).catch((error)=>{
-      location.href="/";
+      console.log(error)
+      this.modalText="近くのレストランがありませんでした。"
+      this.$bvModal.show("modal")
     });
     if(response){
       this.items = response.rest;
